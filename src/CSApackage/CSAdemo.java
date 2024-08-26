@@ -7,7 +7,8 @@ package CSApackage;
 
 import java.awt.Color;
 import java.awt.Point;
-import javax.swing.JColorChooser;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -17,7 +18,7 @@ public class CSAdemo extends javax.swing.JFrame {
   
   protected Mac theMac = null;
   private int NumInputUnits = 20;
-  
+  private JSpinner inputUnitsSpinner; //add spinner for controlling # units
   /**
    * Creates new form CSAdemo
    */
@@ -65,6 +66,8 @@ public class CSAdemo extends javax.swing.JFrame {
     jToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     jToolBar1.setRollover(true);
     jToolBar1.setPreferredSize(new java.awt.Dimension(13, 30));
+
+
 
     instructionsBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     instructionsBtn.setText("Instructions");
@@ -170,6 +173,19 @@ public class CSAdemo extends javax.swing.JFrame {
 
     pack();
     setLocationRelativeTo(null);
+    // Add this in initComponents() method, near other toolbar items
+    inputUnitsSpinner = new JSpinner(new SpinnerNumberModel(20, 1, 100, 1));
+    inputUnitsSpinner.setMaximumSize(new Dimension(80, 30));
+    jToolBar1.add(new JLabel("Input Units: "));
+    jToolBar1.add(inputUnitsSpinner);
+
+    inputUnitsSpinner.addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        setNumInputUnits((Integer) inputUnitsSpinner.getValue());
+        updateInputUnitsVisualization();
+      }
+    });
   }// </editor-fold>//GEN-END:initComponents
 
   private void instructionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructionsBtnActionPerformed
@@ -281,9 +297,18 @@ public class CSAdemo extends javax.swing.JFrame {
   }
 
   /**
+   /**
    * @param NumInputUnits the NumInputUnits to set
    */
   public void setNumInputUnits(int NumInputUnits) {
     this.NumInputUnits = NumInputUnits;
   }
-}
+
+  // Add this new method here
+  private void updateInputUnitsVisualization() {
+    // This method should update the bottom panel of mainCSA_demoPanel1
+    // to show the correct number of input units
+    ((MainCSA_demoPanel)mainCSA_demoPanel1).updateInputUnits(getNumInputUnits());
+  }
+
+} // Add this closing brace for the CSAdemo class

@@ -21,31 +21,31 @@ import javax.swing.JSlider;
  * @author  rod
  */
 public class MainCSA_demoPanel extends javax.swing.JPanel
-{    
+{
   private CSAdemo theApp = null;
   private static final DecimalFormat DF1 = new DecimalFormat( "0.0" );
-  int current_max_V_value = 100;  
-  boolean relativeToMax_V_CrosstalkLims = false;  
+  int current_max_V_value = 100;
+  boolean relativeToMax_V_CrosstalkLims = false;
   private boolean ShowHoveringVals = true;
   private boolean tie_G_V_ecc = false;
-  
+
   // Colors
-  
-  public Color focused_CM_background = new Color(255,255,230);  
+
+  public Color focused_CM_background = new Color(255,255,230);
   public Color colorLowCrosstalkLimit = new Color(51,204,255);
-  public Color colorHighCrosstalkLimit = new Color(255,102,102);  
+  public Color colorHighCrosstalkLimit = new Color(255,102,102);
   Color nonMaxVColor = Color.lightGray;
   Color maxVColor = Color.black;
   Color irrelevantColor = Color.lightGray;
   Color correctWinColor = Color.black;
   Color incorrectWinColor = Color.red;
-  Color incorrectLossColor = new Color(255, 153, 153); // Color.red;  
+  Color incorrectLossColor = new Color(255, 153, 153); // Color.red;
 //  Color cellColor = new Color(192, 192, 192);
-  
-  
+
+
   // this is used to create labels used in some sliders.
   Dictionary<Integer, Component> labelTable = new Hashtable<>();
-  
+
    /**
    * @return the ShowHoveringVals
    */
@@ -58,66 +58,66 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
    */
   public void setShowHoveringVals(boolean ShowHoveringVals) {
     this.ShowHoveringVals = ShowHoveringVals;
-  }  
-  
-  
+  }
+
+
   /** Creates new form MainCSA_demoPanel */
   public MainCSA_demoPanel(CSAdemo app)
-  {    
+  {
     labelTable.put(0, new JLabel("0"));
     labelTable.put(20, new JLabel("0.2"));
     labelTable.put(40, new JLabel("0.4"));
     labelTable.put(60, new JLabel("0.6"));
     labelTable.put(80, new JLabel("0.8"));
     labelTable.put(100, new JLabel("1"));
-    
-    
-      
+
+
+
     theApp = app;
     initComponents();
-     
+
     ((V_to_mu_plot)sigmoidDisplayPanel).SetController(this);
     ((SingleCMPanel)singleCM_V_rho_Panel).SetController(this);
-    ((MacPlanPanel)theMacPlanPanel).SetController(this);  
-    ((ExplicitInputDisplayPanel)ExplicitInputDisplay).SetController(this);    
-    
+    ((MacPlanPanel)theMacPlanPanel).SetController(this);
+    ((ExplicitInputDisplayPanel)ExplicitInputDisplay).SetController(this);
+
     ((V_to_mu_plot)sigmoidDisplayPanel).setTheMac(theApp.theMac);
     ((SingleCMPanel)singleCM_V_rho_Panel).setTheMac(theApp.theMac);
     ((MacPlanPanel)theMacPlanPanel).setTheMac(theApp.theMac);
     ((ExplicitInputDisplayPanel)ExplicitInputDisplay).setTheMac(theApp.theMac);
-    
+
     ((V_to_mu_plot)sigmoidDisplayPanel).set_CM_plan_class((SingleCMPanel)singleCM_V_rho_Panel);
     ((SingleCMPanel)singleCM_V_rho_Panel).set_plot_class((V_to_mu_plot)sigmoidDisplayPanel);
-    ((MacPlanPanel)theMacPlanPanel).set_plot_class((V_to_mu_plot)sigmoidDisplayPanel);   
-    ((SingleCMPanel)singleCM_V_rho_Panel).setM_macPlanPanel((MacPlanPanel)theMacPlanPanel);   
+    ((MacPlanPanel)theMacPlanPanel).set_plot_class((V_to_mu_plot)sigmoidDisplayPanel);
+    ((SingleCMPanel)singleCM_V_rho_Panel).setM_macPlanPanel((MacPlanPanel)theMacPlanPanel);
     ((ExplicitInputDisplayPanel)ExplicitInputDisplay).setM_macPlanPanel((MacPlanPanel)theMacPlanPanel);
-    
+
     // Preset mac panel members in accord with the initially selected radio button.
-    
+
     theApp.theMac.SetCrossTalkLowLimFactor( 0 );
     theApp.theMac.SetCrossTalkLowLim( 0 );
     theApp.theMac.SetCrossTalkHighLimFactor( 0.5f );
     theApp.theMac.SetCrossTalkHighLim( 0.5f );
     theApp.theMac.SetWinner_V_Val( 1.0f );
-    
+
     this.max_crosstalk_slider.setValue((int)(theApp.theMac.GetCrossTalkHighLimFactor() * 100));
     this.min_crosstalk_slider.setValue((int)(theApp.theMac.GetCrossTalkLowLimFactor() * 100));
 
     theApp.theMac.create_V_Distributions(true, true);
     theApp.theMac.updateDependentDistributions();
-    theApp.theMac.chooseCodeAndComputeAccuracies();   
+    theApp.theMac.chooseCodeAndComputeAccuracies();
   }
-  
+
   public MacPlanPanel getMacPanel()
   {
     return (MacPlanPanel)theMacPlanPanel;
   }
-  
+
   public V_to_mu_plot get_V_to_mu_Panel()
   {
     return (V_to_mu_plot)sigmoidDisplayPanel;
   }
-  
+
   /** This method is called from within the constructor to
    * initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is
@@ -1074,7 +1074,7 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
 
   private void Fam_EarlyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_Fam_EarlyActionPerformed
   {//GEN-HEADEREND:event_Fam_EarlyActionPerformed
-    // set the sliders 
+    // set the sliders
     this.min_crosstalk_slider.setValue(0);
     this.max_crosstalk_slider.setValue(10);
     handleLifePhaseButton(0.0f, 0.1f);
@@ -1084,7 +1084,7 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   {//GEN-HEADEREND:event_formComponentShown
     this.max_crosstalk_slider.setValue((int)theApp.theMac.GetCrossTalkHighLimFactor() * 100);
     this.min_crosstalk_slider.setValue((int)theApp.theMac.GetCrossTalkLowLimFactor() * 100);
-    
+
     ((V_to_mu_plot)sigmoidDisplayPanel).repaint();
     ((MacPlanPanel)theMacPlanPanel).repaint();
     repaint();
@@ -1093,11 +1093,11 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   private void btClearCellsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btClearCellsActionPerformed
   {//GEN-HEADEREND:event_btClearCellsActionPerformed
     theApp.theMac.ClearCells();
-    
+
     ((V_to_mu_plot)sigmoidDisplayPanel).repaint();
     ((SingleCMPanel)singleCM_V_rho_Panel).repaint();
-    theApp.theMac.reset_V_maxes();    
-    
+    theApp.theMac.reset_V_maxes();
+
     ((MacPlanPanel)theMacPlanPanel).repaint();
     this.expectedAccuracy.setText(String.format(""));
     this.accuracy.setText(String.format(""));
@@ -1121,9 +1121,9 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
 
   private void G_SliderStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_G_SliderStateChanged
   {//GEN-HEADEREND:event_G_SliderStateChanged
-    JSlider source = (JSlider)evt.getSource();    
-    int cantGoLowerThan = (int)(theApp.theMac.GetCrossTalkHighLim() * 100);   
-    
+    JSlider source = (JSlider)evt.getSource();
+    int cantGoLowerThan = (int)(theApp.theMac.GetCrossTalkHighLim() * 100);
+
     if (source.getValue() < cantGoLowerThan)
     {
       this.G_Slider.setValue(cantGoLowerThan);
@@ -1132,45 +1132,45 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
       if (this.tie_G_V_ecc)
       {
         // The goal of tieing these values G (= max_V) and ecc is to achieve a more linear decrease of expected intersection
-        // as G drops away from 1.0.  There are multiple strategies for achieving this goal including also simultaneously 
+        // as G drops away from 1.0.  There are multiple strategies for achieving this goal including also simultaneously
         // adjusting the inflection pt (IP) as well, but I'm not doing that for now.  Empirically, I've found that increasing ecc approx.
         // linearly from 10 to 25, while G drops linearly from 1.0 to 0.25, makes the G-to-expected intersection relation much
         // more linear.  If one also approx.linearly moves IP from 50 down to 25 at the same time, it's even more linear, but again,
         // I'm not adding that complexity into the code right now.
-        
+
         int tied_ecc_value = 25;
-                
+
         this.beta_slider.setValue(tied_ecc_value);
-        
+
       }
     }
     else
     {
-      current_max_V_value = source.getValue();  
-      
+      current_max_V_value = source.getValue();
+
       if (this.tie_G_V_ecc)
       {
         int tied_ecc_value = (int)(-0.2f * current_max_V_value ) + 30;
-                
+
         this.beta_slider.setValue(tied_ecc_value);
       }
-    }    
-    
+    }
+
 //    if (!source.getValueIsAdjusting())
 //    {
-//      current_max_V_value = source.getValue();            
+//      current_max_V_value = source.getValue();
 //    }
 
     theApp.theMac.G = (float) source.getValue() / 100f;
     theApp.theMac.calculate_eta();
     theApp.theMac.create_V_Distributions(false, false);
-      
+
     updateStateOfGUI();
   }//GEN-LAST:event_G_SliderStateChanged
 
   private void spinnerQStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_spinnerQStateChanged
   {//GEN-HEADEREND:event_spinnerQStateChanged
-   
+
     try {
       spinnerQ.commitEdit();
     } catch ( java.text.ParseException e )
@@ -1186,10 +1186,10 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
       theApp.theMac.updateDependentDistributions();
       theApp.theMac.chooseCodeAndComputeAccuracies();
     }
-    
+
     String text = String.format("Mac comprised of Q = %2d WTA CMs, each with K = %2d units", theApp.theMac.Q, theApp.theMac.K);
     labMacChartTitle.setText(text);
-    
+
     ((MacPlanPanel)theMacPlanPanel).repaint();
     ((SingleCMPanel)this.singleCM_V_rho_Panel).repaint();
     ((V_to_mu_plot)this.sigmoidDisplayPanel).repaint();
@@ -1208,16 +1208,16 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
     JSlider source = (JSlider)evt.getSource();
 //    if (!source.getValueIsAdjusting())
 //    {
-      int val = source.getValue();  
+      int val = source.getValue();
       int cantGoHigherThan = (int)(theApp.theMac.GetCrossTalkHighLim() * 100);
-      
+
       if (val < cantGoHigherThan)
       {
-        theApp.theMac.SetCrossTalkLowLimFactor((float)val / 100);            
+        theApp.theMac.SetCrossTalkLowLimFactor((float)val / 100);
       }
       else
       {
-        theApp.theMac.SetCrossTalkLowLimFactor((float)cantGoHigherThan / 100); 
+        theApp.theMac.SetCrossTalkLowLimFactor((float)cantGoHigherThan / 100);
         this.min_crosstalk_slider.setValue(cantGoHigherThan);
       }
       this.minCrosstalk_V.setText(String.format("%3.2f", theApp.theMac.GetCrossTalkLowLimFactor() * 100));
@@ -1230,20 +1230,20 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
     JSlider source = (JSlider)evt.getSource();
 //    if (!source.getValueIsAdjusting())
 //    {
-      int val = source.getValue();    
+      int val = source.getValue();
       int cantGoLowerThan = (int)(theApp.theMac.GetCrossTalkLowLim() * 100);
-      
+
       if (val > cantGoLowerThan)
       {
-        theApp.theMac.SetCrossTalkHighLimFactor((float)val / 100);            
+        theApp.theMac.SetCrossTalkHighLimFactor((float)val / 100);
       }
       else
       {
-        theApp.theMac.SetCrossTalkHighLimFactor((float)cantGoLowerThan / 100); 
+        theApp.theMac.SetCrossTalkHighLimFactor((float)cantGoLowerThan / 100);
         this.max_crosstalk_slider.setValue(cantGoLowerThan);
       }
-      
-      this.maxCrosstalk_V.setText(String.format("%3.2f", theApp.theMac.GetCrossTalkHighLimFactor() * 100));      
+
+      this.maxCrosstalk_V.setText(String.format("%3.2f", theApp.theMac.GetCrossTalkHighLimFactor() * 100));
       theApp.theMac.create_V_Distributions(false, true);
       updateStateOfGUI();
 //    }
@@ -1251,7 +1251,7 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
 
   private void V_to_mu_multiplier_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_V_to_mu_multiplier_SliderStateChanged
     JSlider source = (JSlider)evt.getSource();
-    int val = source.getValue(); 
+    int val = source.getValue();
     theApp.theMac.setV_to_mu_Multiplier(val);
     theApp.theMac.calculate_eta();
     updateStateOfGUI();
@@ -1263,7 +1263,7 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
 //    {
 
     int cantGoLowerThan = (int)(theApp.theMac.GetCrossTalkHighLim() * 100);
-    
+
     if (source.getValue() < cantGoLowerThan)
     {
       this.G_Slider.setValue(cantGoLowerThan);
@@ -1272,23 +1272,23 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
     }
     else
     {
-      current_max_V_value = source.getValue();        
+      current_max_V_value = source.getValue();
     }
 
     theApp.theMac.SetWinner_V_Val( (float)current_max_V_value / (float)100 );
     updateStateOfGUI();
-    
+
     // else, since no cells are present yet, there is nothing left to do.
 //    }
   }//GEN-LAST:event_max_V_SliderStateChanged
 
   private void generateNewSampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateNewSampleActionPerformed
-    
+
     if (theApp.theMac.K > 0)
     {
       theApp.theMac.create_V_Distributions(false, true);
       theApp.theMac.updateDependentDistributions();
-      theApp.theMac.chooseCodeAndComputeAccuracies();    
+      theApp.theMac.chooseCodeAndComputeAccuracies();
       ((MacPlanPanel)theMacPlanPanel).repaint();
     }
     updateOtherPanelsConsistently();
@@ -1309,7 +1309,7 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   private void gamma_Slider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gamma_Slider1StateChanged
     // TODO add your handling code here:
     JSlider source = (JSlider)evt.getSource();
-    int val = source.getValue(); 
+    int val = source.getValue();
     theApp.theMac.setGamma(val);
     theApp.theMac.calculate_eta();
     updateStateOfGUI();
@@ -1331,10 +1331,10 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
       theApp.theMac.updateDependentDistributions();
       theApp.theMac.chooseCodeAndComputeAccuracies();
     }
-    
+
     String text = String.format("Mac comprised of Q = %2d WTA CMs, each with K = %2d units", theApp.theMac.Q, theApp.theMac.K);
     labMacChartTitle.setText(text);
-    
+
     ((MacPlanPanel)theMacPlanPanel).repaint();
     ((SingleCMPanel)this.singleCM_V_rho_Panel).repaint();
     ((V_to_mu_plot)this.sigmoidDisplayPanel).repaint();
@@ -1351,10 +1351,10 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
       int cellDex = Integer.parseInt(listOfWinners[cmDex]);
       cellDex = Math.min(cellDex, theApp.theMac.K-1);
       theApp.theMac.maxV_index.set(cmDex++, cellDex);
-    }    
+    }
     theApp.theMac.create_V_Distributions(false, true);
     theApp.theMac.updateDependentDistributions();
-    theApp.theMac.chooseCodeAndComputeAccuracies();    
+    theApp.theMac.chooseCodeAndComputeAccuracies();
     ((MacPlanPanel)theMacPlanPanel).repaint();
   }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1362,61 +1362,61 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   {
     return relativeToMax_V_CrosstalkLims;
   }
-  
+
   protected void setCurrentMax_V(float val)
   {
-    current_max_V_value = (int) (val * 100);    
+    current_max_V_value = (int) (val * 100);
   }
-  
+
   /**
-   * 
+   *
    */
   protected void updateStateOfGUI()
   {
     // make sure two sliders based on max V value are synced.
     this.G_Slider.setValue(current_max_V_value);
     this.max_V_Slider.setValue(current_max_V_value);
-    
+
     if (theApp.theMac.K > 0)
-    {     
+    {
       theApp.theMac.updateDependentDistributions();
-      theApp.theMac.chooseCodeAndComputeAccuracies();    
+      theApp.theMac.chooseCodeAndComputeAccuracies();
       ((MacPlanPanel)theMacPlanPanel).repaint();
-    }    
+    }
     updateOtherPanelsConsistently();
   }
-  
+
   /**
-   * 
+   *
    * @param crossTalkLowLimFactor
-   * @param crossTalkHighLimFactor 
+   * @param crossTalkHighLimFactor
    */
   protected void handleLifePhaseButton(float crossTalkLowLimFactor, float crossTalkHighLimFactor)
   {
     theApp.theMac.SetCrossTalkLowLimFactor( crossTalkLowLimFactor );
     theApp.theMac.SetCrossTalkHighLimFactor( crossTalkHighLimFactor );
-    
+
     if (theApp.theMac.K > 0)
     {
       theApp.theMac.create_V_Distributions(true, true);
       theApp.theMac.updateDependentDistributions();
-      theApp.theMac.chooseCodeAndComputeAccuracies();    
+      theApp.theMac.chooseCodeAndComputeAccuracies();
       ((MacPlanPanel)theMacPlanPanel).repaint();
     }
     updateOtherPanelsConsistently();
   }
-  
+
   /**
    * Update the V-to-mu graph panel so that its V values are gotten from the first CM's created distributions.
    */
   protected void updateOtherPanelsConsistently()
-  {            
+  {
     theApp.theMac.compute_whole_sigmoid();
     ((V_to_mu_plot)sigmoidDisplayPanel).repaint();
-    ((SingleCMPanel)singleCM_V_rho_Panel).repaint();    
-    updateStatsControls();    
+    ((SingleCMPanel)singleCM_V_rho_Panel).repaint();
+    updateStatsControls();
   }
-  
+
   protected void updateStatsControls()
   {
     this.accuracy.setText(String.format("%3.2f", theApp.theMac.getAccuracy()));
@@ -1425,27 +1425,27 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
     this.minCrosstalk_V.setText(String.format("%3.0f", theApp.theMac.GetCrossTalkLowLimFactor() * 100.0));
     this.maxCrosstalk_V.setText(String.format("%3.0f", theApp.theMac.GetCrossTalkHighLimFactor() * 100.0));
   }
-     
+
   public int getMaxCrosstalkLimitValue()
   {
     return max_crosstalk_slider.getValue();
   }
-  
+
   public int get_V_to_mu_mult_slider_val()
   {
     return V_to_mu_multiplier_Slider.getValue();
   }
-  
+
   public int get_inflect_slider_val()
   {
     return inflection_Slider.getValue();
   }
-  
+
   public int get_beta_slider_val()
   {
     return beta_slider.getValue();
   }
-  
+
   public void Get_Things_Going()
   {
 //    G_plotPanel.Recalc( 100, 50, 15 );
@@ -1467,8 +1467,8 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   public void setTheApp(CSAdemo theApp) {
     this.theApp = theApp;
   }
-  
-  
+
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup Age_Related_Dists;
   private javax.swing.JPanel ExplicitInputDisplay;
@@ -1538,5 +1538,25 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   public void setTie_G_V_ecc(boolean tie_G_V_ecc) {
     this.tie_G_V_ecc = tie_G_V_ecc;
   }
-  
-}
+  // Other methods will be above this
+
+  public void updateInputUnits(int numUnits) {
+    // Update the number of input units in the app
+    theApp.setNumInputUnits(numUnits);
+
+    // Update the ExplicitInputDisplayPanel
+    ((ExplicitInputDisplayPanel)ExplicitInputDisplay).updateInputUnits(numUnits);
+
+    // Update the Mac object if necessary
+    theApp.theMac.updateInputUnits(numUnits);
+
+    // Update other components that might depend on the number of input units
+    updateOtherPanelsConsistently();
+
+    // Trigger a repaint of the panel to reflect the changes visually
+    repaint();
+  }
+
+} // This is the closing brace of the class
+
+
