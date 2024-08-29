@@ -5,10 +5,12 @@
  */
 package CSApackage;
 
-import java.awt.Color;
-import java.awt.Point;
+import javax.swing.*;
+
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -27,8 +29,9 @@ public class CSAdemo extends javax.swing.JFrame {
     theMac.setTheApp(this);
     
     initComponents();
+    // added to bring fnuctionality to controlable number of input units, This ensures that the spinner starts with the correct initial value.
+    inputUnitsSpinner.setValue(NumInputUnits);
   }
-
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,7 +183,6 @@ public class CSAdemo extends javax.swing.JFrame {
     jToolBar1.add(inputUnitsSpinner);
 
     inputUnitsSpinner.addChangeListener(new ChangeListener() {
-      @Override
       public void stateChanged(ChangeEvent e) {
         setNumInputUnits((Integer) inputUnitsSpinner.getValue());
         updateInputUnitsVisualization();
@@ -301,7 +303,10 @@ public class CSAdemo extends javax.swing.JFrame {
    * @param NumInputUnits the NumInputUnits to set
    */
   public void setNumInputUnits(int NumInputUnits) {
-    this.NumInputUnits = NumInputUnits;
+    this.NumInputUnits = NumInputUnits;  //modified to  update the mac object -amile
+    if (theMac != null) {
+      theMac.updateInputUnits(NumInputUnits);
+    }
   }
 
   // Add this new method here

@@ -1540,20 +1540,21 @@ public class MainCSA_demoPanel extends javax.swing.JPanel
   }
   // Other methods will be above this
 
+  /**
+   * Updates the panel to reflect the new number of input units. -Amile
+   * @param numUnits The new number of input units
+   */
   public void updateInputUnits(int numUnits) {
-    // Update the number of input units in the app
-    theApp.setNumInputUnits(numUnits);
-
     // Update the ExplicitInputDisplayPanel
-    ((ExplicitInputDisplayPanel)ExplicitInputDisplay).updateInputUnits(numUnits);
+    if (ExplicitInputDisplay instanceof ExplicitInputDisplayPanel) {
+      ((ExplicitInputDisplayPanel) ExplicitInputDisplay).updateInputUnits(numUnits);
+    }
 
-    // Update the Mac object if necessary
-    theApp.theMac.updateInputUnits(numUnits);
+    // Update any other components that depend on the number of input units
+    // For now, we'll just print a message
+    System.out.println("MainCSA_demoPanel updated with " + numUnits + " input units");
 
-    // Update other components that might depend on the number of input units
-    updateOtherPanelsConsistently();
-
-    // Trigger a repaint of the panel to reflect the changes visually
+    // Trigger a repaint to reflect the changes visually
     repaint();
   }
 

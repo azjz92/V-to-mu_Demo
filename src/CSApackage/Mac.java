@@ -654,5 +654,13 @@ public class Mac {
   public void setV_to_mu_Multiplier(int V_to_mu_Multiplier) {
     this.V_to_mu_Multiplier = V_to_mu_Multiplier;
   }
-  
+  /**
+   * Updates the number of input units. - Amile
+   * @param numUnits The new number of input units
+   */
+  public void updateInputUnits(int numUnits) {
+    // For now, we'll just print the update.
+    // We can expand this later if needed.
+    System.out.println("Mac updated with " + numUnits + " input units");
+  }
 }

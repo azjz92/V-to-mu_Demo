@@ -1,8 +1,6 @@
 package CSApackage;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -192,4 +190,10 @@ public class ExplicitInputDisplayPanel extends javax.swing.JPanel {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables
-}
+  public void updateInputUnits(int numUnits) {
+    // Update any internal state related to the number of input units
+    // Recalculate any dimensions or layouts that depend on the number of input units
+    repaint();
+  }
+
+} // This is the closing brace of the class
